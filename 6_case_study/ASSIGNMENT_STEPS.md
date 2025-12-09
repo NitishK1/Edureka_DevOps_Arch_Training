@@ -8,7 +8,7 @@
 podman machine start
 ```
 
----
+
 
 ### Step 1: Build the Docker Image
 
@@ -23,7 +23,7 @@ podman build --tls-verify=false -t company-website:latest .
 podman images | grep company-website
 ```
 
----
+
 
 ### Step 2: Test Locally (Optional)
 
@@ -40,7 +40,7 @@ podman stop test-website
 podman rm test-website
 ```
 
----
+
 
 ### Step 3: Push to Docker Hub
 
@@ -62,7 +62,7 @@ podman push --tls-verify=false docker.io/hardikgangwar/company-website:v1.0
 **Verify:**
 - Visit https://hub.docker.com/r/hardikgangwar/company-website
 
----
+
 
 ### Step 4: Initialize Docker Swarm Cluster
 
@@ -76,7 +76,7 @@ docker info | grep Swarm
 
 **Output should show:** `Swarm: active`
 
----
+
 
 ### Step 5: Deploy Service to Swarm with Volumes
 
@@ -108,7 +108,7 @@ docker service ps company-website
 docker service logs company-website
 ```
 
----
+
 
 ### Step 6: Access the Website
 
@@ -116,7 +116,7 @@ Open in browser:
 - **Local:** http://localhost
 - **Docker Hub:** docker pull docker.io/hardikgangwar/company-website:latest
 
----
+
 
 ## Assignment Checklist
 
@@ -128,7 +128,7 @@ Open in browser:
 - [x] Volume mount configured for persistence
 - [x] Port 80 exposed (container) / 8080 (host)
 
----
+
 
 ## Quick Commands Reference
 

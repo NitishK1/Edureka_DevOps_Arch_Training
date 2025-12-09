@@ -59,13 +59,13 @@ echo "Deploying ${NUM_REPLICAS} container replicas..."
 for i in $(seq 1 ${NUM_REPLICAS}); do
     CONTAINER_NAME="web${i}"
     echo "  - Starting container: ${CONTAINER_NAME}"
-    
+
     podman run -d \
         --pod ${POD_NAME} \
         --name ${CONTAINER_NAME} \
         -v "${WEBSITE_DIR}:/var/www/html:Z" \
         ${FULL_IMAGE_NAME}
-    
+
     sleep 1
 done
 
