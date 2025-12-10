@@ -7,7 +7,8 @@ services:
       - "80:80"
     volumes:
       # Using a named volume for swarm
-      - website-data:/var/www/html
+      # - website-data:/var/www/html
+      - ./dockerContent/Case-study app:/var/www/html
     deploy:
       replicas: 3
       update_config:
@@ -30,7 +31,6 @@ services:
 networks:
   webnet:
     driver: overlay
-
-volumes:
-  website-data:
-    driver: local
+# volumes:
+#   website-data:
+#     driver: local

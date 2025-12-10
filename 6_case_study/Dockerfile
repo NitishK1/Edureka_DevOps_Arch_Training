@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 
 # Copy website code into container
 # Note: For production with volumes, this serves as the default content
-COPY ["dockerContent/Case-study app/", "/var/www/html/"]
+# COPY ["dockerContent/Case-study app/", "/var/www/html/"]
 
 # Set correct permissions for Drupal-like PHP app
 RUN chown -R www-data:www-data /var/www/html \
