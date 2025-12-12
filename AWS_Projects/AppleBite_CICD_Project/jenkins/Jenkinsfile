@@ -133,15 +133,17 @@ pipeline {
                 script {
                     echo "Running unit tests..."
 
-                    // Run tests in a temporary container - Windows/Unix compatible
+                    // Run tests in a temporary container
+                    // Note: Docker containers run Linux, so we always use Linux commands inside the container
                     if (isUnix()) {
                         sh """
                             docker run --rm ${DOCKER_IMAGE}:${DOCKER_TAG} \\
                                 /bin/bash -c 'echo "Running unit tests..." && echo "Tests passed"'
                         """
                     } else {
+                        // On Windows, bat is used to run docker command, but container still runs Linux
                         bat """
-                            docker run --rm ${DOCKER_IMAGE}:${DOCKER_TAG} cmd /c "echo Running unit tests... && echo Tests passed"
+                            docker run --rm ${DOCKER_IMAGE}:${DOCKER_TAG} /bin/bash -c "echo Running unit tests... && echo Tests passed"
                         """
                     }
 
