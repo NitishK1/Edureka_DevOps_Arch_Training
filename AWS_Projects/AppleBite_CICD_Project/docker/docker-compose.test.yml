@@ -11,7 +11,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ../app:/var/www/html
+      - ../app/website:/var/www/html
       - ./logs:/var/log/apache2
     environment:
       - ENVIRONMENT=test
