@@ -207,8 +207,9 @@ pipeline {
                             docker-compose -f docker-compose.test.yml up -d
                         """
 
-                        // Wait for service to be ready
-                        sleep(30)
+                        // Wait for service to be ready (longer wait for health check)
+                        echo "Waiting for containers to be healthy..."
+                        sleep(60)
                     }
 
                     echo "Deployed to Test environment at http://127.0.0.1:${TEST_PORT}"
@@ -221,17 +222,40 @@ pipeline {
                 script {
                     echo "Running integration tests on Test environment..."
 
-                    // Run integration tests - Windows/Unix compatible
+                    // Run integration tests - Windows/Unix compatible with retry logic
                     if (isUnix()) {
                         sh """
-                            curl -f http://127.0.0.1:${TEST_PORT} || exit 1
-                            echo "Integration tests passed"
+                            for i in 1 2 3 4 5; do
+                                echo "Attempt \$i: Testing http://127.0.0.1:${TEST_PORT}"
+                                if curl -f http://127.0.0.1:${TEST_PORT}; then
+                                    echo "Integration tests passed"
+                                    exit 0
+                                fi
+                                echo "Waiting 10 seconds before retry..."
+                                sleep 10
+                            done
+                            echo "Integration tests failed after 5 attempts"
+                            exit 1
                         """
                     } else {
-                        bat """
-                            curl -f http://127.0.0.1:${TEST_PORT}
-                            echo Integration tests passed
-                        """
+                        // Windows - Retry logic with proper error handling
+                        def testPassed = false
+                        for (int i = 1; i <= 5; i++) {
+                            echo "Attempt ${i}: Testing http://127.0.0.1:${TEST_PORT}"
+                            def result = bat(script: "curl -f http://127.0.0.1:${TEST_PORT}", returnStatus: true)
+                            if (result == 0) {
+                                echo "Integration tests passed"
+                                testPassed = true
+                                break
+                            }
+                            if (i < 5) {
+                                echo "Waiting 10 seconds before retry..."
+                                sleep(10)
+                            }
+                        }
+                        if (!testPassed) {
+                            error "Integration tests failed after 5 attempts"
+                        }
                     }
                 }
             }

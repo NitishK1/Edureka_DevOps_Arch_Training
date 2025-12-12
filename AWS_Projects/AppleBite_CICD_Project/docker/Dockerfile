@@ -74,10 +74,26 @@ RUN pecl install xdebug-3.1.6 \
 # Copy application files from the website subdirectory
 COPY ./app/website/ /var/www/html/
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html
+# Set permissions - allow directory listing for development
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
+
+# Configure Apache for development - allow directory index
+RUN echo '<Directory /var/www/html/>\n\
+    Options Indexes FollowSymLinks\n\
+    AllowOverride All\n\
+    Require all granted\n\
+</Directory>' > /etc/apache2/conf-available/dev-directory.conf \
+    && a2enconf dev-directory
 
 EXPOSE 80
+
+# Health check for development
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost/ || exit 1
+
+# Start Apache in foreground
+CMD ["apache2-foreground"]
 
 USER www-data
 

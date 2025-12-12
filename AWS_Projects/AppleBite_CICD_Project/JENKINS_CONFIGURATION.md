@@ -49,7 +49,8 @@ In the **Build Triggers** section, check **Poll SCM** and set the schedule:
 H/5 * * * *
 ```
 
-This polls GitHub every 5 minutes for changes. When changes are detected, a build triggers automatically.
+This polls GitHub every 5 minutes for changes. When changes are detected, a
+build triggers automatically.
 
 **Advantages:**
 - ✅ Works with local Jenkins (no public URL needed)
@@ -61,7 +62,8 @@ This polls GitHub every 5 minutes for changes. When changes are detected, a buil
 - ⚠️ Makes regular requests to GitHub
 
 #### Option B: GitHub Webhook (Recommended for Production)
-In the **Build Triggers** section, check **GitHub hook trigger for GITScm polling**
+In the **Build Triggers** section, check **GitHub hook trigger for GITScm
+polling**
 
 Then follow the setup in `GITHUB_WEBHOOK_SETUP.md` to configure GitHub webhooks.
 
@@ -100,7 +102,8 @@ Obtained AWS_Projects/AppleBite_CICD_Project/jenkins/Jenkinsfile from git https:
 ## Automatic Build Triggering - Quick Reference
 
 ### No Builds Triggering Automatically?
-Jenkins won't automatically trigger builds unless you configure a trigger. Check:
+Jenkins won't automatically trigger builds unless you configure a trigger.
+Check:
 
 1. **Go to:** Jenkins → AppleBite-Pipeline → Configure → Build Triggers
 2. **Enable one of:**

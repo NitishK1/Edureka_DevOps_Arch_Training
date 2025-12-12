@@ -1,7 +1,8 @@
 # Quick Start: Enable Automatic Jenkins Builds
 
 ## Problem
-Jenkins doesn't automatically build when you push to GitHub because **no build trigger is configured**.
+Jenkins doesn't automatically build when you push to GitHub because **no build
+trigger is configured**.
 
 ## Solution: Enable SCM Polling (Easiest for Local Jenkins)
 
