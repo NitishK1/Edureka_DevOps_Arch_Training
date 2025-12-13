@@ -7,7 +7,7 @@ pipeline {
         CONTAINER_NAME = 'applebite-container'
         TEST_SERVER = 'localhost'  // Using localhost since Jenkins runs on Master VM
         PROD_SERVER = 'localhost'  // Both VMs have same IP, using localhost
-        DEPLOY_TO_PROD = 'false'  // Set to 'false' to skip prod deployment (same server issue)
+        DEPLOY_TO_PROD = 'true'  // Set to 'true' to enable prod deployment
     }
 
     stages {
@@ -147,52 +147,38 @@ pipeline {
                     echo "=========================================="
 
                     try {
-                        // Ensure Docker is installed on prod server
+                        // Deploy to production (localhost on different port)
                         sh '''
-                            cd ansible
-                            ansible-playbook -i inventory/hosts playbooks/install-docker.yml --limit prod_server
-                        '''
+                            cd AWS_Projects/AppleBite_CICD_Project2
 
-                        // Deploy to production server
-                        sh '''
-                            # Copy files to production server
-                            scp -o StrictHostKeyChecking=no -r . ${PROD_SERVER}:~/applebite-app/
+                            # Stop and remove old prod container if exists
+                            sudo docker stop ${CONTAINER_NAME}-prod 2>/dev/null || true
+                            sudo docker rm ${CONTAINER_NAME}-prod 2>/dev/null || true
 
-                            # Build and run Docker container on production server
-                            ssh -o StrictHostKeyChecking=no ${PROD_SERVER} << 'EOF'
-                                cd ~/applebite-app
+                            # Use the image already built in Job 3
+                            echo "Deploying to Production..."
 
-                                # Stop and remove old container if exists
-                                docker stop ${CONTAINER_NAME} 2>/dev/null || true
-                                docker rm ${CONTAINER_NAME} 2>/dev/null || true
+                            # Run production container on different port
+                            sudo docker run -d \
+                                --name ${CONTAINER_NAME}-prod \
+                                -p 8082:80 \
+                                -e APP_VERSION=${DOCKER_TAG} \
+                                -e ENVIRONMENT=production \
+                                --restart unless-stopped \
+                                ${DOCKER_IMAGE}:latest
 
-                                # Build new Docker image
-                                echo "Building Docker image on Production..."
-                                docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
-                                docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest
+                            # Verify container is running
+                            sleep 5
+                            sudo docker ps | grep ${CONTAINER_NAME}-prod
 
-                                # Run new container
-                                echo "Running Docker container on Production..."
-                                docker run -d \\
-                                    --name ${CONTAINER_NAME} \\
-                                    -p 80:80 \\
-                                    -e APP_VERSION=${DOCKER_TAG} \\
-                                    -e ENVIRONMENT=production \\
-                                    --restart unless-stopped \\
-                                    ${DOCKER_IMAGE}:latest
-
-                                # Verify container is running
-                                sleep 5
-                                docker ps | grep ${CONTAINER_NAME}
-
-                                echo "Application deployed successfully on Production Server!"
-EOF
+                            echo "Application deployed successfully on Production Server!"
                         '''
 
                         // Verify deployment on production server
                         sh '''
                             echo "Verifying deployment on Production Server..."
-                            curl -f http://${PROD_SERVER}/ || exit 1
+                            sleep 3
+                            curl -f http://localhost:8082/ || exit 1
                             echo "Production Server deployment verification successful!"
                         '''
 
