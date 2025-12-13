@@ -54,15 +54,19 @@ pipeline {
                             echo "Installing Docker..."
                             sudo DEBIAN_FRONTEND=noninteractive apt-get update -qq
                             sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker.io
-                            sudo systemctl start docker
-                            sudo systemctl enable docker
-                            sudo usermod -aG docker jenkins
                             echo "Docker installed successfully"
                         else
                             echo "Docker already installed"
                         fi
 
-                        docker --version
+                        # Start Docker service (WSL doesn't use systemd)
+                        echo "Starting Docker service..."
+                        sudo service docker start || sudo dockerd > /dev/null 2>&1 &
+                        sleep 3
+
+                        # Verify Docker is running
+                        sudo docker --version
+                        sudo docker ps
                     '''
                 }
             }
