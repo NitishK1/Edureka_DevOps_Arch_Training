@@ -239,13 +239,15 @@ EOF
 
     post {
         success {
-            echo "=========================================="
-            echo "Pipeline completed successfully!"
-            echo "Test Server: http://${TEST_SERVER}"
-            if (env.DEPLOY_TO_PROD == 'true') {
-                echo "Production Server: http://${PROD_SERVER}"
+            script {
+                echo "=========================================="
+                echo "Pipeline completed successfully!"
+                echo "Test Server: http://${TEST_SERVER}"
+                if (env.DEPLOY_TO_PROD == 'true') {
+                    echo "Production Server: http://${PROD_SERVER}"
+                }
+                echo "=========================================="
             }
-            echo "=========================================="
         }
 
         failure {
