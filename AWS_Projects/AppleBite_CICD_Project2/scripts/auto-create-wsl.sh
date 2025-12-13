@@ -31,16 +31,16 @@ if echo "$wsl_list" | grep -qi "Ubuntu-22.04"; then
     echo "Master VM (Ubuntu-22.04) found!"
 elif echo "$wsl_list" | grep -i "Ubuntu" | grep -qv "Ubuntu-22.04"; then
     echo "Ubuntu found. Creating Master VM (Ubuntu-22.04) from Ubuntu base..."
-    
+
     # Create Ubuntu-22.04 from Ubuntu
     mkdir -p "$INSTALL_DIR/Ubuntu-22.04"
     echo "Exporting Ubuntu as base..."
     wsl.exe --export Ubuntu "$INSTALL_DIR/ubuntu-base-temp.tar"
-    
+
     if [ $? -eq 0 ]; then
         echo "Creating Ubuntu-22.04 (Master VM)..."
         wsl.exe --import Ubuntu-22.04 "$INSTALL_DIR/Ubuntu-22.04" "$INSTALL_DIR/ubuntu-base-temp.tar"
-        
+
         if [ $? -eq 0 ]; then
             echo "✓ Master VM (Ubuntu-22.04) created successfully"
             rm -f "$INSTALL_DIR/ubuntu-base-temp.tar"
@@ -80,14 +80,14 @@ if wsl.exe --list | grep -q "ProdServer"; then
 else
     echo "Step 1: Exporting $MASTER_VM as base image..."
     wsl.exe --export "$MASTER_VM" "$EXPORT_FILE"
-    
+
     if [ $? -eq 0 ]; then
         echo "✓ $MASTER_VM exported successfully"
         echo ""
-        
+
         echo "Step 2: Creating ProdServer..."
         wsl.exe --import ProdServer "$INSTALL_DIR/ProdServer" "$EXPORT_FILE"
-        
+
         if [ $? -eq 0 ]; then
             echo "✓ ProdServer created successfully"
         else

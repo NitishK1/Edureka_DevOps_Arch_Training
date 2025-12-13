@@ -19,7 +19,7 @@ This guide will help you create and configure 3 separate WSL instances:
 └─────────────────────────────────────────────────────────────┘
 ```
 
----
+
 
 ## Part 1: Create 3 WSL Instances
 
@@ -76,7 +76,7 @@ wsl --list --verbose
 # - ProdServer
 ```
 
----
+
 
 ## Part 2: Configure Each WSL Instance
 
@@ -180,7 +180,7 @@ hostname -I
 # Note this IP: This is your PROD_SERVER_IP
 ```
 
----
+
 
 ## Part 3: Configure SSH Between Instances
 
@@ -225,7 +225,7 @@ chmod 600 ~/.ssh/authorized_keys
 chmod 700 ~/.ssh
 ```
 
----
+
 
 ## Part 4: Get IP Addresses
 
@@ -253,7 +253,7 @@ Production:     192.168.128.102
 
 **Note**: These IPs may change after Windows restart!
 
----
+
 
 ## Part 5: Configure Project Files
 
@@ -288,7 +288,7 @@ environment {
 }
 ```
 
----
+
 
 ## Part 6: Start All Services
 
@@ -336,7 +336,7 @@ sudo service ssh start
 # Docker will be installed by Ansible during pipeline
 ```
 
----
+
 
 ## Part 7: Quick Reference Commands
 
@@ -378,7 +378,7 @@ wsl -d ProdServer -u root service ssh start
 Write-Host "All WSL services started!"
 ```
 
----
+
 
 ## Part 8: Handle WSL IP Changes
 
@@ -431,7 +431,7 @@ echo "IPs updated successfully!"
 # Then use hostnames in configuration instead of IPs
 ```
 
----
+
 
 ## Part 9: Testing the Setup
 
@@ -460,7 +460,7 @@ ansible -i ansible/inventory/hosts prod_server -m ping
 # Verify deployment on Test and Prod servers
 ```
 
----
+
 
 ## Part 10: Troubleshooting
 
@@ -499,7 +499,7 @@ wsl -d ProdServer hostname -I
 # Run update-ips.sh script
 ```
 
----
+
 
 ## Part 11: Summary of IPs and Credentials
 
@@ -511,11 +511,10 @@ wsl -d ProdServer hostname -I
 | Test | TestServer | ___.___.___.___ | ________ | Master's key |
 | Prod | ProdServer | ___.___.___.___ | ________ | Master's key |
 
-**Jenkins URL**: http://localhost:8080 or http://MASTER_IP:8080  
-**Test App URL**: http://TEST_SERVER_IP/  
-**Prod App URL**: http://PROD_SERVER_IP/  
+**Jenkins URL**: http://localhost:8080 or http://MASTER_IP:8080 **Test App
+URL**: http://TEST_SERVER_IP/ **Prod App URL**: http://PROD_SERVER_IP/
 
----
+
 
 ## Next Steps
 
@@ -529,6 +528,7 @@ wsl -d ProdServer hostname -I
 8. ✅ Verify deployment on Test server
 9. ✅ Verify deployment on Prod server
 
----
 
-**Ready to proceed? Follow these steps in order and you'll have a complete 3-VM setup!**
+
+**Ready to proceed? Follow these steps in order and you'll have a complete 3-VM
+setup!**

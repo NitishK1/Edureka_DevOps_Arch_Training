@@ -9,20 +9,23 @@
 6. [Troubleshooting](#troubleshooting)
 7. [Git Submodules](#git-submodules)
 
----
+
 
 ## Project Overview
 
 ### Business Problem
-AppleBite Co. uses Cloud for their products with modular components, multiple frameworks, and development by different teams. They need to:
+AppleBite Co. uses Cloud for their products with modular components, multiple
+frameworks, and development by different teams. They need to:
 - Deliver product updates frequently with high quality & reliability
 - Accelerate software delivery speed and reduce feedback time
 - Manage complex builds and incremental deployments
 
 ### Solution
 Automated CI/CD pipeline using:
-- **Git** - Version control (Main repo: `NitishK1/Edureka_DevOps_Arch_Training`, App submodule: `edureka-devops/projCert`)
-- **Jenkins** - Continuous integration and deployment (Local Windows installation on port 8090)
+- **Git** - Version control (Main repo: `NitishK1/Edureka_DevOps_Arch_Training`,
+  App submodule: `edureka-devops/projCert`)
+- **Jenkins** - Continuous integration and deployment (Local Windows
+  installation on port 8090)
 - **Docker** - Application containerization
 - **Ansible** - Configuration management (optional, skipped on Windows)
 
@@ -37,7 +40,7 @@ Automated CI/CD pipeline using:
    - Runs integration tests
    - Can deploy to Stage (8081) and Production (8082) on master branch
 
----
+
 
 ## Architecture
 
@@ -80,7 +83,7 @@ AWS_Projects/AppleBite_CICD_Project/
 - **Container Platform:** Docker Desktop on Windows
 - **CI/CD:** Jenkins LTS (local installation)
 
----
+
 
 ## Prerequisites
 
@@ -91,10 +94,12 @@ AWS_Projects/AppleBite_CICD_Project/
 4. **curl** - For testing endpoints
 
 ### Repository Access
-- Main repository: `https://github.com/NitishK1/Edureka_DevOps_Arch_Training.git`
-- App submodule: `https://github.com/edureka-devops/projCert.git` (public, no credentials needed)
+- Main repository:
+  `https://github.com/NitishK1/Edureka_DevOps_Arch_Training.git`
+- App submodule: `https://github.com/edureka-devops/projCert.git` (public, no
+  credentials needed)
 
----
+
 
 ## Jenkins Configuration
 
@@ -124,10 +129,12 @@ In the job configuration:
 #### Pipeline Configuration
 - **Definition:** `Pipeline script from SCM`
 - **SCM:** `Git`
-- **Repository URL:** `https://github.com/NitishK1/Edureka_DevOps_Arch_Training.git`
+- **Repository URL:**
+  `https://github.com/NitishK1/Edureka_DevOps_Arch_Training.git`
 - **Credentials:** None (public repo) or add GitHub credentials if private
 - **Branch Specifier:** `*/main`
-- **Script Path:** `AWS_Projects/AppleBite_CICD_Project/jenkins/Jenkinsfile` ⬅️ **CRITICAL!**
+- **Script Path:** `AWS_Projects/AppleBite_CICD_Project/jenkins/Jenkinsfile` ⬅️
+  **CRITICAL!**
 
 #### Additional Behaviours
 Click **Add** → **Advanced sub-modules behaviours**:
@@ -139,7 +146,7 @@ Click **Add** → **Advanced sub-modules behaviours**:
 2. Click **Build Now**
 3. Monitor console output for any errors
 
----
+
 
 ## Pipeline Stages
 
@@ -206,7 +213,7 @@ Click **Add** → **Advanced sub-modules behaviours**:
 ### 14. Cleanup
 - Removes old Docker images (older than 72 hours)
 
----
+
 
 ## Troubleshooting
 
@@ -221,7 +228,8 @@ Click **Add** → **Advanced sub-modules behaviours**:
 ### Integration Tests Failing with HTTP 403
 **Problem:** Container runs but returns 403 Forbidden.
 
-**Solution:** Fixed! The volume mount in `docker-compose.test.yml` now correctly mounts `../app/website:/var/www/html` (not `../app:/var/www/html`).
+**Solution:** Fixed! The volume mount in `docker-compose.test.yml` now correctly
+mounts `../app/website:/var/www/html` (not `../app:/var/www/html`).
 
 **Verify:**
 ```bash
@@ -252,10 +260,12 @@ bash scripts/diagnose-test-environment.sh
 ### "exec: cmd: not found" Error
 **Problem:** Jenkinsfile tried to run Windows `cmd` inside Linux container.
 
-**Solution:** Fixed! Docker containers always run Linux, so commands **inside** the container must use `/bin/bash`, even when Jenkins is on Windows.
+**Solution:** Fixed! Docker containers always run Linux, so commands **inside**
+the container must use `/bin/bash`, even when Jenkins is on Windows.
 
 ### Path Not Found Errors on Windows
-**Problem:** Jenkins can't find paths like `C:\...\AWS_Projects\AppleBite_CICD_Project`.
+**Problem:** Jenkins can't find paths like
+`C:\...\AWS_Projects\AppleBite_CICD_Project`.
 
 **Solutions:**
 - Ensure PROJECT_DIR is correctly set in Jenkinsfile
@@ -263,20 +273,24 @@ bash scripts/diagnose-test-environment.sh
 - Check path conversion in bat commands uses backslashes
 
 ### Wrong Jenkinsfile Being Used
-**Problem:** Jenkins is using `app/Jenkinsfile` instead of `jenkins/Jenkinsfile`.
+**Problem:** Jenkins is using `app/Jenkinsfile` instead of
+`jenkins/Jenkinsfile`.
 
 **Solution:**
 1. Go to job **Configure** → **Pipeline** section
-2. Verify **Script Path:** `AWS_Projects/AppleBite_CICD_Project/jenkins/Jenkinsfile`
+2. Verify **Script Path:**
+   `AWS_Projects/AppleBite_CICD_Project/jenkins/Jenkinsfile`
 3. The app/Jenkinsfile is from the submodule and lacks Windows compatibility
 
----
+
 
 ## Git Submodules
 
 ### Understanding the Setup
-This project uses Git submodules to separate the main infrastructure code from the application code:
-- **Main repository:** DevOps configuration, Jenkins pipeline, Docker files, Ansible playbooks
+This project uses Git submodules to separate the main infrastructure code from
+the application code:
+- **Main repository:** DevOps configuration, Jenkins pipeline, Docker files,
+  Ansible playbooks
 - **Submodule (app):** PHP application code from third-party repo
 
 ### Submodule Location
@@ -302,7 +316,7 @@ Jenkins automatically checks out submodules when configured with:
 3. Jenkins clones app code from `edureka-devops/projCert` into `app/` directory
 4. Pipeline builds and deploys the app code
 
----
+
 
 ## Quick Reference
 
@@ -345,7 +359,7 @@ winpty docker exec -it applebite-test-web bash
 - `STAGE_PORT`: `8081`
 - `PROD_PORT`: `8082`
 
----
+
 
 ## Project Success Metrics
 
@@ -361,24 +375,28 @@ winpty docker exec -it applebite-test-web bash
 - Typical successful build: 3-5 minutes
 - Includes: checkout, build, test, deploy, integration tests
 
----
+
 
 ## Notes
 
 ### Windows vs Linux Compatibility
-The Jenkinsfile uses `isUnix()` checks to run different commands based on the host OS:
+The Jenkinsfile uses `isUnix()` checks to run different commands based on the
+host OS:
 - **Unix hosts:** Use `sh` commands
 - **Windows hosts:** Use `bat` commands with path conversion
 
-**Important:** Commands **inside Docker containers** always use Linux shell, even on Windows.
+**Important:** Commands **inside Docker containers** always use Linux shell,
+even on Windows.
 
 ### Why Test Environment Uses Volume Mount
-The test environment (`docker-compose.test.yml`) mounts `../app/website:/var/www/html` as a volume for rapid development. This allows:
+The test environment (`docker-compose.test.yml`) mounts
+`../app/website:/var/www/html` as a volume for rapid development. This allows:
 - Live code updates without rebuilding image
 - Faster development iteration
 - Easy debugging
 
-Stage and Production don't use volume mounts (files are baked into the image for immutability).
+Stage and Production don't use volume mounts (files are baked into the image for
+immutability).
 
 ### Docker Multi-Stage Build
 The Dockerfile has three stages:
@@ -388,8 +406,7 @@ The Dockerfile has three stages:
 
 Test environment uses `development` target, Stage/Prod use `production` target.
 
----
 
-**Document Version:** 1.0  
-**Last Updated:** December 12, 2025  
-**Project Repository:** https://github.com/NitishK1/Edureka_DevOps_Arch_Training
+
+**Document Version:** 1.0 **Last Updated:** December 12, 2025 **Project
+Repository:** https://github.com/NitishK1/Edureka_DevOps_Arch_Training

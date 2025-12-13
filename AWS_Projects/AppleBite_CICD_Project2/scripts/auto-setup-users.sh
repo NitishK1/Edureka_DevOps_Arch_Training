@@ -41,17 +41,17 @@ wsl.exe -d "$MASTER_VM" -u root -- bash -c "
         # Create user with home directory
         useradd -m -s /bin/bash $USERNAME 2>/dev/null
         echo '$USERNAME:$PASSWORD' | chpasswd
-        
+
         # Add user to sudo group
         usermod -aG sudo $USERNAME
-        
+
         # Allow sudo without password for automation
         echo '$USERNAME ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/$USERNAME
         chmod 0440 /etc/sudoers.d/$USERNAME
-        
+
         echo '✓ User $USERNAME created on Master VM'
     fi
-    
+
     # Set default user for WSL
     echo '[user]' > /etc/wsl.conf
     echo 'default=$USERNAME' >> /etc/wsl.conf
@@ -71,17 +71,17 @@ wsl.exe -d ProdServer -u root -- bash -c "
         # Create user with home directory
         useradd -m -s /bin/bash $USERNAME 2>/dev/null
         echo '$USERNAME:$PASSWORD' | chpasswd
-        
+
         # Add user to sudo group
         usermod -aG sudo $USERNAME
-        
+
         # Allow sudo without password for automation
         echo '$USERNAME ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/$USERNAME
         chmod 0440 /etc/sudoers.d/$USERNAME
-        
+
         echo '✓ User $USERNAME created on ProdServer'
     fi
-    
+
     # Set default user for WSL
     echo '[user]' > /etc/wsl.conf
     echo 'default=$USERNAME' >> /etc/wsl.conf

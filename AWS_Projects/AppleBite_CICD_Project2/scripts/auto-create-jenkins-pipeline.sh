@@ -192,7 +192,7 @@ if [ "$JOB_EXISTS" = "200" ]; then
             -H "Content-Type: application/xml" \
             --data-binary "@/tmp/pipeline-config.xml")
     fi
-    
+
     if [ "$HTTP_CODE" = "200" ]; then
         echo "✓ Job updated successfully"
     else
@@ -217,7 +217,7 @@ else
             -H "Content-Type: application/xml" \
             --data-binary "@/tmp/pipeline-config.xml")
     fi
-    
+
     if [ "$HTTP_CODE" = "200" ]; then
         echo "✓ Job created successfully"
     else

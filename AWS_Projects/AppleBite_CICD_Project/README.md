@@ -16,9 +16,10 @@ Contains:
 - Git submodules setup
 - Quick reference commands
 
-**Use this when:** Setting up the project, configuring Jenkins, or troubleshooting issues.
+**Use this when:** Setting up the project, configuring Jenkins, or
+troubleshooting issues.
 
----
+
 
 ### 2. [DEMO_GUIDE.md](DEMO_GUIDE.md)
 **Step-by-step manual demonstration script**
@@ -31,9 +32,10 @@ Contains:
 - 30-minute demo timeline
 - Tips for successful demonstrations
 
-**Use this when:** Presenting the project, giving a demo, or showing manual steps without automation.
+**Use this when:** Presenting the project, giving a demo, or showing manual
+steps without automation.
 
----
+
 
 ## 🚀 Quick Start
 
@@ -47,7 +49,7 @@ Contains:
 2. Execute demo script Phase 1-8
 3. Use the provided commands to show each component
 
----
+
 
 ## 📁 Project Structure
 
@@ -62,7 +64,7 @@ AppleBite_CICD_Project/
 └── scripts/                    ← Utility scripts
 ```
 
----
+
 
 ## 🔗 Important URLs
 
@@ -71,7 +73,7 @@ AppleBite_CICD_Project/
 - **Stage Environment:** http://127.0.0.1:8081
 - **Production Environment:** http://127.0.0.1:8082
 
----
+
 
 ## 🛠️ Technologies
 
@@ -81,7 +83,7 @@ AppleBite_CICD_Project/
 - **Ansible** - Configuration management (optional)
 - **PHP 7.4 + Apache** - Application stack
 
----
+
 
 ## 📋 Problem Statement
 
@@ -92,7 +94,7 @@ AppleBite Co. needs to:
 
 **Solution:** Automated CI/CD pipeline triggered by Git push.
 
----
+
 
 ## ✅ Success Criteria
 
@@ -102,23 +104,20 @@ AppleBite Co. needs to:
 - ✅ Integration tests pass
 - ✅ Application returns HTTP 200 OK
 
----
+
 
 ## 🆘 Quick Help
 
-**Pipeline not triggering?**  
-→ Check Jenkins Build Triggers (Poll SCM configured)
+**Pipeline not triggering?** → Check Jenkins Build Triggers (Poll SCM
+configured)
 
-**HTTP 403 error?**  
-→ Fixed! Volume mount corrected in docker-compose.test.yml
+**HTTP 403 error?** → Fixed! Volume mount corrected in docker-compose.test.yml
 
-**Container unhealthy?**  
-→ Run: `bash scripts/diagnose-test-environment.sh`
+**Container unhealthy?** → Run: `bash scripts/diagnose-test-environment.sh`
 
-**More help:**  
-→ See PROJECT_DOCUMENTATION.md Troubleshooting section
+**More help:** → See PROJECT_DOCUMENTATION.md Troubleshooting section
 
----
 
-**Repository:** https://github.com/NitishK1/Edureka_DevOps_Arch_Training  
-**Last Updated:** December 12, 2025
+
+**Repository:** https://github.com/NitishK1/Edureka_DevOps_Arch_Training **Last
+Updated:** December 12, 2025

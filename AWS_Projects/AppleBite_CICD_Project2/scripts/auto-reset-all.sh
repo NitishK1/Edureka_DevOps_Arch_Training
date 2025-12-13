@@ -87,7 +87,7 @@ echo ""
 # Step 3: Clean Master VM
 if [ ! -z "$MASTER_VM" ]; then
     echo "Step 3: Cleaning Master VM ($MASTER_VM)..."
-    
+
     # Remove Jenkins
     echo "  Removing Jenkins..."
     wsl.exe -d "$MASTER_VM" -u root -- bash -c "
@@ -100,7 +100,7 @@ if [ ! -z "$MASTER_VM" ]; then
         rm -f /usr/share/keyrings/jenkins-keyring.asc
     " 2>/dev/null
     echo "  ✓ Jenkins removed"
-    
+
     # Remove Ansible
     echo "  Removing Ansible..."
     wsl.exe -d "$MASTER_VM" -u root -- bash -c "
@@ -109,7 +109,7 @@ if [ ! -z "$MASTER_VM" ]; then
         add-apt-repository --remove ppa:ansible/ansible -y 2>/dev/null
     " 2>/dev/null
     echo "  ✓ Ansible removed"
-    
+
     # Remove SSH keys and config
     echo "  Removing SSH configurations..."
     wsl.exe -d "$MASTER_VM" -- bash -c "
@@ -119,7 +119,7 @@ if [ ! -z "$MASTER_VM" ]; then
         rm -f ~/.ssh/known_hosts
     " 2>/dev/null
     echo "  ✓ SSH configurations removed"
-    
+
     # Clean up apt
     echo "  Cleaning up packages..."
     wsl.exe -d "$MASTER_VM" -u root -- bash -c "

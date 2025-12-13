@@ -1,6 +1,7 @@
 # Jenkins Pipeline Creation Guide
 
-Since programmatic creation via XML is encountering issues, please create the pipeline manually through the Jenkins UI. It only takes 2 minutes:
+Since programmatic creation via XML is encountering issues, please create the
+pipeline manually through the Jenkins UI. It only takes 2 minutes:
 
 ## Step-by-Step Instructions:
 
@@ -23,17 +24,16 @@ Since programmatic creation via XML is encountering issues, please create the pi
 
 #### Build Triggers Section:
 - ✅ Check **"Poll SCM"**
-- Schedule: `H/5 * * * *`
-  (This polls GitHub every 5 minutes)
+- Schedule: `H/5 * * * *` (This polls GitHub every 5 minutes)
 
 #### Pipeline Section:
 - Definition: Select **"Pipeline script from SCM"**
 - SCM: Select **"Git"**
-  
+
 **Repositories:**
 - Repository URL: `https://github.com/NitishK1/Edureka_DevOps_Arch_Training.git`
 - Credentials: `- none -` (public repo)
-  
+
 **Branches to build:**
 - Branch Specifier: `*/main`
 
@@ -48,9 +48,10 @@ Since programmatic creation via XML is encountering issues, please create the pi
 
 ### 5. Test the Pipeline
 - Click **"Build Now"** to trigger the first build manually
-- The pipeline will automatically trigger every 5 minutes when it detects changes in your Git repo
+- The pipeline will automatically trigger every 5 minutes when it detects
+  changes in your Git repo
 
----
+
 
 ## Verification
 
@@ -66,10 +67,12 @@ Navigate to: Dashboard → AppleBite-CICD-Pipeline
 - `H/5 * * * *` means:
   - Check GitHub every 5 minutes
   - `H` adds a hash to distribute load
-  - Format: `H/5` (every 5 min) `*` (any hour) `*` (any day) `*` (any month) `*` (any day of week)
+  - Format: `H/5` (every 5 min) `*` (any hour) `*` (any day) `*` (any month) `*`
+    (any day of week)
 
----
+
 
 ## Alternative: Quick Create Script (if you want to try again)
 
-If you want to attempt automation again, the issue is with XML formatting in heredocs. The manual UI method above is faster and more reliable.
+If you want to attempt automation again, the issue is with XML formatting in
+heredocs. The manual UI method above is faster and more reliable.

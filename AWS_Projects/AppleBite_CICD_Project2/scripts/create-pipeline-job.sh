@@ -115,7 +115,7 @@ if [ -n "$JOB_EXISTS" ]; then
     echo "Job exists. Updating..."
     java -jar /tmp/jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" \
         update-job "$JOB_NAME" < /tmp/pipeline-job.xml
-    
+
     if [ $? -eq 0 ]; then
         echo "✓ Job updated successfully"
     else
@@ -126,7 +126,7 @@ else
     echo "Creating new job..."
     java -jar /tmp/jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" \
         create-job "$JOB_NAME" < /tmp/pipeline-job.xml
-    
+
     if [ $? -eq 0 ]; then
         echo "✓ Job created successfully"
     else

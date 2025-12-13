@@ -75,12 +75,12 @@ JENKINSFILE="$PROJECT_ROOT/Jenkinsfile-with-prod"
 if [ -f "$JENKINSFILE" ]; then
     # Create backup
     cp "$JENKINSFILE" "$JENKINSFILE.bak"
-    
+
     # Update IPs
     sed -i "s/TEST_SERVER = '[^']*'/TEST_SERVER = '$test_ip'/" "$JENKINSFILE"
     sed -i "s/PROD_SERVER = '[^']*'/PROD_SERVER = '$prod_ip'/" "$JENKINSFILE"
     sed -i "s/SSH_USER = '[^']*'/SSH_USER = '$username'/" "$JENKINSFILE"
-    
+
     echo "✓ Updated: $JENKINSFILE"
     echo "  (Backup saved as Jenkinsfile-with-prod.bak)"
 else
@@ -99,11 +99,11 @@ JENKINSFILE_TEST="$PROJECT_ROOT/Jenkinsfile"
 if [ -f "$JENKINSFILE_TEST" ]; then
     # Create backup
     cp "$JENKINSFILE_TEST" "$JENKINSFILE_TEST.bak"
-    
+
     # Update IP
     sed -i "s/TEST_SERVER = '[^']*'/TEST_SERVER = '$test_ip'/" "$JENKINSFILE_TEST"
     sed -i "s/SSH_USER = '[^']*'/SSH_USER = '$username'/" "$JENKINSFILE_TEST"
-    
+
     echo "✓ Updated: $JENKINSFILE_TEST"
     echo "  (Backup saved as Jenkinsfile.bak)"
 else

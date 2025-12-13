@@ -1,16 +1,18 @@
 # AppleBite CI/CD Project - Demo Guide
 
-**Purpose:** Step-by-step manual commands to demonstrate the CI/CD pipeline without automation scripts.
+**Purpose:** Step-by-step manual commands to demonstrate the CI/CD pipeline
+without automation scripts.
 
----
+
 
 ## Table of Contents
 1. [Pre-Demo Setup](#pre-demo-setup)
-2. [Demo Script: Full Pipeline Walkthrough](#demo-script-full-pipeline-walkthrough)
+2.
+   [Demo Script: Full Pipeline Walkthrough](#demo-script-full-pipeline-walkthrough)
 3. [Explaining Each Component](#explaining-each-component)
 4. [Common Demo Scenarios](#common-demo-scenarios)
 
----
+
 
 ## Pre-Demo Setup
 
@@ -37,7 +39,7 @@ git submodule status
 ls app/website/  # Should show index.php, config.php, etc.
 ```
 
----
+
 
 ## Demo Script: Full Pipeline Walkthrough
 
@@ -54,7 +56,7 @@ ls app/website/  # Should show index.php, config.php, etc.
 Developer Push → GitHub → Jenkins → Build → Test → Deploy → Validate
 ```
 
----
+
 
 ### Phase 2: Version Control (Git + Submodules)
 
@@ -71,7 +73,8 @@ git log --oneline -5
 ls -la
 ```
 
-**Explain:** Main repository contains DevOps infrastructure (Docker, Jenkins, Ansible)
+**Explain:** Main repository contains DevOps infrastructure (Docker, Jenkins,
+Ansible)
 
 #### Step 2: Show Git Submodule (App Code)
 ```bash
@@ -95,9 +98,10 @@ ls website/
 cd ..
 ```
 
-**Explain:** App code is from third-party vendor (separate repository), integrated as submodule
+**Explain:** App code is from third-party vendor (separate repository),
+integrated as submodule
 
----
+
 
 ### Phase 3: Containerization (Docker)
 
@@ -134,7 +138,8 @@ docker build -t applebite-app:demo -f docker/Dockerfile --target development .
 docker images | grep applebite-app
 ```
 
-**Explain:** This is what Jenkins does automatically in the "Build Docker Image" stage
+**Explain:** This is what Jenkins does automatically in the "Build Docker Image"
+stage
 
 #### Step 5: Run Unit Tests in Container
 ```bash
@@ -144,9 +149,10 @@ docker run --rm applebite-app:demo /bin/bash -c "echo 'Running unit tests...' &&
 # Output shows PHP version and "Tests passed"
 ```
 
-**Explain:** Tests run inside isolated container, matching production environment
+**Explain:** Tests run inside isolated container, matching production
+environment
 
----
+
 
 ### Phase 4: Deployment (Docker Compose)
 
@@ -211,7 +217,7 @@ winpty docker exec applebite-test-web cat //etc//apache2//sites-enabled//000-def
 
 **Explain:** Container is running Apache web server serving PHP application
 
----
+
 
 ### Phase 5: Testing and Validation
 
@@ -258,7 +264,7 @@ curl -f http://127.0.0.1:8080
 
 **Explain:** Pipeline has retry logic (5 attempts) to handle temporary failures
 
----
+
 
 ### Phase 6: CI/CD Automation (Jenkins)
 
@@ -326,7 +332,7 @@ git push origin main
 3. Navigate through pipeline stages in real-time
 4. Show Blue Ocean view (optional, if installed)
 
----
+
 
 ### Phase 7: Multi-Environment Deployment
 
@@ -388,7 +394,7 @@ docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 - Stage: http://127.0.0.1:8081
 - Production: http://127.0.0.1:8082
 
----
+
 
 ### Phase 8: Configuration Management (Ansible)
 
@@ -412,36 +418,36 @@ cat ansible/playbooks/deploy-app.yml
 - Currently skipped on Windows (uses Docker Compose directly)
 - Would be used in cloud environments (AWS, Azure, GCP)
 
----
+
 
 ## Explaining Each Component
 
 ### Git + Submodules
-**What:** Version control with third-party app code integration  
-**Why:** Separates infrastructure code from application code  
-**How:** Main repo contains DevOps config, submodule contains app from vendor
+**What:** Version control with third-party app code integration **Why:**
+Separates infrastructure code from application code **How:** Main repo contains
+DevOps config, submodule contains app from vendor
 
 ### Docker
-**What:** Application containerization  
-**Why:** Consistent environment across dev/test/prod, eliminates "works on my machine"  
-**How:** Multi-stage Dockerfile creates optimized images for each environment
+**What:** Application containerization **Why:** Consistent environment across
+dev/test/prod, eliminates "works on my machine" **How:** Multi-stage Dockerfile
+creates optimized images for each environment
 
 ### Docker Compose
-**What:** Multi-container orchestration  
-**Why:** Manages web server + database + networking together  
-**How:** YAML files define services, volumes, networks for each environment
+**What:** Multi-container orchestration **Why:** Manages web server + database +
+networking together **How:** YAML files define services, volumes, networks for
+each environment
 
 ### Jenkins
-**What:** CI/CD automation server  
-**Why:** Automates build, test, deploy workflow, reduces manual errors  
-**How:** Jenkinsfile defines pipeline stages, triggers on code changes
+**What:** CI/CD automation server **Why:** Automates build, test, deploy
+workflow, reduces manual errors **How:** Jenkinsfile defines pipeline stages,
+triggers on code changes
 
 ### Ansible (Optional)
-**What:** Configuration management and provisioning  
-**Why:** Ensures consistent server configuration  
-**How:** Playbooks define desired state, applied to all servers
+**What:** Configuration management and provisioning **Why:** Ensures consistent
+server configuration **How:** Playbooks define desired state, applied to all
+servers
 
----
+
 
 ## Common Demo Scenarios
 
@@ -470,16 +476,17 @@ cat ansible/playbooks/deploy-app.yml
 5. Show production deployment (port 8082)
 
 ### Scenario 4: Show Rollback (Manual)
-1. Tag current production image: `docker tag applebite-app:latest applebite-app:backup`
+1. Tag current production image:
+   `docker tag applebite-app:latest applebite-app:backup`
 2. Deploy new version to production
-3. If issues occur, rollback: 
+3. If issues occur, rollback:
    ```bash
    docker tag applebite-app:backup applebite-app:latest
    cd docker
    docker-compose -f docker-compose.prod.yml up -d --force-recreate
    ```
 
----
+
 
 ## Quick Commands Cheat Sheet
 
@@ -531,7 +538,7 @@ docker rmi applebite-app:demo
 docker volume prune
 ```
 
----
+
 
 ## Demo Timeline (Estimated 30 minutes)
 
@@ -544,7 +551,7 @@ docker volume prune
 | 20-25 min | Jenkins Pipeline | Show Jenkinsfile, trigger build, explain stages |
 | 25-30 min | Multi-Environment | Show test/stage/prod, explain promotion process |
 
----
+
 
 ## Tips for Successful Demo
 
@@ -561,13 +568,14 @@ docker volume prune
 4. Show failures and recovery (not just success path)
 
 ### Common Questions
-- **Q: Why use Docker?** A: Consistent environments, eliminates configuration drift
+- **Q: Why use Docker?** A: Consistent environments, eliminates configuration
+  drift
 - **Q: Why Git submodules?** A: Separates vendor code from infrastructure code
 - **Q: Why Jenkins?** A: Automates repetitive tasks, reduces human error
-- **Q: Why multiple environments?** A: Test changes before production, reduce risk
+- **Q: Why multiple environments?** A: Test changes before production, reduce
+  risk
 
----
 
-**Document Version:** 1.0  
-**Last Updated:** December 12, 2025  
-**Estimated Demo Duration:** 30 minutes
+
+**Document Version:** 1.0 **Last Updated:** December 12, 2025 **Estimated Demo
+Duration:** 30 minutes

@@ -66,12 +66,12 @@ full_auto_setup() {
     echo ""
     echo "This may take 10-15 minutes..."
     echo ""
-    
+
     # Auto-confirm for fully automated setup
     if [ -z "$AUTO_CONFIRM" ]; then
         echo -n "Continue? (y/n): "
         read confirm
-        
+
         if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
             echo "Setup cancelled."
             return
@@ -79,9 +79,9 @@ full_auto_setup() {
     else
         echo "AUTO_CONFIRM=yes - proceeding automatically..."
     fi
-    
+
     script_dir="$(dirname "$0")"
-    
+
     # Step 1: Create WSL instances
     echo ""
     echo "▶ Step 1/5: Creating WSL instances..."
@@ -91,7 +91,7 @@ full_auto_setup() {
         echo "Error: auto-create-wsl.sh not found"
         return
     fi
-    
+
     # Step 2: Setup users
     echo ""
     echo "▶ Step 2/5: Setting up user accounts..."
@@ -101,14 +101,14 @@ full_auto_setup() {
         echo "Error: auto-setup-users.sh not found"
         return
     fi
-    
+
     # Step 2.5: Restart WSL to apply user changes and get unique IPs
     echo ""
     echo "▶ Restarting WSL VMs to get unique IP addresses..."
     wsl.exe --shutdown
     sleep 3
     echo "✓ WSL restarted - VMs will get unique IPs on next start"
-    
+
     # Step 3: Setup SSH
     echo ""
     echo "▶ Step 3/5: Setting up SSH connectivity..."
@@ -118,7 +118,7 @@ full_auto_setup() {
         echo "Error: auto-setup-ssh.sh not found"
         return
     fi
-    
+
     # Step 4: Install Jenkins & Ansible
     echo ""
     echo "▶ Step 4/5: Installing Jenkins & Ansible..."
@@ -128,7 +128,7 @@ full_auto_setup() {
         echo "Error: auto-setup-jenkins-ansible.sh not found"
         return
     fi
-    
+
     # Step 5: Update configs
     echo ""
     echo "▶ Step 5/5: Updating configuration files..."
@@ -138,13 +138,13 @@ full_auto_setup() {
         echo "Error: auto-update-config.sh not found"
         return
     fi
-    
+
     echo ""
     echo "╔═══════════════════════════════════════════════════════════╗"
     echo "║     ✓ FULL SETUP COMPLETE!                              ║"
     echo "╚═══════════════════════════════════════════════════════════╝"
     echo ""
-    
+
     # Get Master VM
     MASTER_VM=""
     wsl_list=$(wsl.exe --list | tr -d '\r' | tr -d '\0')
@@ -153,9 +153,9 @@ full_auto_setup() {
     elif echo "$wsl_list" | grep -qi "^Ubuntu$"; then
         MASTER_VM="Ubuntu"
     fi
-    
+
     master_ip=$(wsl.exe -d "$MASTER_VM" hostname -I 2>/dev/null | tr -d '\r\n ' | awk '{print $1}')
-    
+
     echo "Your CI/CD environment is ready!"
     echo ""
     echo "Jenkins URL: http://$master_ip:8080"
@@ -229,7 +229,7 @@ check_ips() {
     else
         echo ""
         echo "Manual IP check:"
-        
+
         # Detect Master VM
         MASTER_VM=""
         wsl_list=$(wsl.exe --list | tr -d '\r' | tr -d '\0')
@@ -238,7 +238,7 @@ check_ips() {
         elif echo "$wsl_list" | grep -qi "^Ubuntu$"; then
             MASTER_VM="Ubuntu"
         fi
-        
+
         echo -n "Master VM ($MASTER_VM):  "; wsl.exe -d "$MASTER_VM" hostname -I 2>/dev/null | tr -d '\r\n '
         echo ""
         echo -n "Test Server:             "; wsl.exe -d TestServer hostname -I 2>/dev/null | tr -d '\r\n '
@@ -262,12 +262,12 @@ start_services() {
 test_ssh() {
     echo ""
     echo "Testing SSH connectivity..."
-    
+
     # Get IPs automatically
     test_ip=$(wsl.exe -d TestServer hostname -I 2>/dev/null | tr -d '\r\n ' | awk '{print $1}')
     prod_ip=$(wsl.exe -d ProdServer hostname -I 2>/dev/null | tr -d '\r\n ' | awk '{print $1}')
     username=$(wsl.exe -d TestServer whoami | tr -d '\r\n ')
-    
+
     # Detect Master VM
     MASTER_VM=""
     wsl_list=$(wsl.exe --list | tr -d '\r' | tr -d '\0')
@@ -276,17 +276,17 @@ test_ssh() {
     elif echo "$wsl_list" | grep -qi "^Ubuntu$"; then
         MASTER_VM="Ubuntu"
     fi
-    
+
     if [ -z "$test_ip" ] || [ -z "$prod_ip" ]; then
         echo "Error: Could not get IPs. Make sure VMs are running."
         return
     fi
-    
+
     echo "Test Server: $test_ip"
     echo "Prod Server: $prod_ip"
     echo "Username: $username"
     echo ""
-    
+
     echo "Testing connection to Test Server..."
     wsl.exe -d "$MASTER_VM" ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no "$username@$test_ip" "echo 'Test Server: Connected successfully'" 2>/dev/null
     if [ $? -eq 0 ]; then
@@ -294,7 +294,7 @@ test_ssh() {
     else
         echo "✗ TestServer connection failed"
     fi
-    
+
     echo ""
     echo "Testing connection to Prod Server..."
     wsl.exe -d "$MASTER_VM" ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no "$username@$prod_ip" "echo 'Prod Server: Connected successfully'" 2>/dev/null
@@ -338,7 +338,7 @@ while true; do
     show_menu
     echo -n "Enter your choice (1-12): "
     read choice
-    
+
     case $choice in
         1) full_auto_setup ;;
         2) create_wsl_instances ;;
@@ -351,19 +351,19 @@ while true; do
         9) test_ssh ;;
         10) show_guide ;;
         11) reset_all ;;
-        12) 
+        12)
             echo ""
             echo "Goodbye!"
             echo ""
             exit 0
             ;;
-        *) 
+        *)
             echo ""
             echo "Invalid choice. Please try again."
             echo ""
             ;;
     esac
-    
+
     echo ""
     echo "Press Enter to continue..."
     read

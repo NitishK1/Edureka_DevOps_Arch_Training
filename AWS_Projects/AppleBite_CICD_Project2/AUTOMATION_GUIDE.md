@@ -10,7 +10,7 @@ cd scripts
 
 Then select option **1** for full automated setup!
 
----
+
 
 ## Automation Scripts Overview
 
@@ -27,7 +27,7 @@ Then select option **1** for full automated setup!
 ./wsl-quickstart.sh
 ```
 
----
+
 
 ### 2. **auto-create-wsl.sh** (VM Creation)
 **Purpose**: Automatically creates TestServer and ProdServer WSL instances
@@ -46,7 +46,7 @@ Then select option **1** for full automated setup!
 
 **Output**: 3 WSL VMs ready (Master, TestServer, ProdServer)
 
----
+
 
 ### 3. **auto-setup-ssh.sh** (SSH Configuration)
 **Purpose**: Configures SSH connectivity between all VMs
@@ -65,7 +65,7 @@ Then select option **1** for full automated setup!
 
 **Output**: Password-less SSH from Master to Test/Prod servers
 
----
+
 
 ### 4. **auto-setup-jenkins-ansible.sh** (Tools Installation)
 **Purpose**: Installs Jenkins, Ansible, and all prerequisites on Master VM
@@ -84,7 +84,7 @@ Then select option **1** for full automated setup!
 ./auto-setup-jenkins-ansible.sh
 ```
 
-**Output**: 
+**Output**:
 - Jenkins running at http://MASTER_IP:8080
 - Ansible ready for configuration management
 - Git ready for version control
@@ -94,7 +94,7 @@ Then select option **1** for full automated setup!
 wsl -d Ubuntu-22.04 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
 
----
+
 
 ### 5. **auto-update-config.sh** (Configuration Updates)
 **Purpose**: Automatically updates all configuration files with current WSL IPs
@@ -113,7 +113,7 @@ wsl -d Ubuntu-22.04 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 **Output**: All configuration files updated with current IPs
 
----
+
 
 ### 6. **check-wsl-ips.sh** (IP Checker)
 **Purpose**: Display IP addresses of all WSL instances
@@ -123,17 +123,18 @@ wsl -d Ubuntu-22.04 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 ./check-wsl-ips.sh
 ```
 
----
+
 
 ### 7. **start-wsl-services.sh** (Service Starter)
-**Purpose**: Start SSH and Jenkins services on all VMs (useful after Windows reboot)
+**Purpose**: Start SSH and Jenkins services on all VMs (useful after Windows
+reboot)
 
 **Manual Usage**:
 ```bash
 ./start-wsl-services.sh
 ```
 
----
+
 
 ## Complete Setup Flow
 
@@ -152,7 +153,7 @@ This runs all 4 automation scripts in sequence:
 
 **Total Time**: ~15-20 minutes
 
----
+
 
 ### Option 2: Manual Step-by-Step
 If you want more control, run each script individually:
@@ -171,7 +172,7 @@ If you want more control, run each script individually:
 ./auto-update-config.sh
 ```
 
----
+
 
 ## After Setup
 
@@ -200,10 +201,11 @@ ansible all -i ansible/inventory/hosts -m ping
 1. Open Jenkins
 2. New Item → Pipeline
 3. Pipeline script from SCM → Git
-4. Repository URL: `https://github.com/NitishK1/Edureka_DevOps_Arch_Training.git`
+4. Repository URL:
+   `https://github.com/NitishK1/Edureka_DevOps_Arch_Training.git`
 5. Script Path: `AWS_Projects/AppleBite_CICD_Project2/Jenkinsfile-with-prod`
 
----
+
 
 ## Troubleshooting
 
@@ -235,7 +237,7 @@ ansible all -i ansible/inventory/hosts -m ping
 # Choose option 8
 ```
 
----
+
 
 ## Files Created/Modified
 
@@ -256,7 +258,7 @@ ansible all -i ansible/inventory/hosts -m ping
 - `Jenkinsfile.bak` - Original Jenkinsfile
 - `Jenkinsfile-with-prod.bak` - Original Jenkinsfile-with-prod
 
----
+
 
 ## Architecture
 
@@ -290,7 +292,7 @@ ansible all -i ansible/inventory/hosts -m ping
 └─────────────────────────────────────────────────┘
 ```
 
----
+
 
 ## Next Steps
 
@@ -301,8 +303,7 @@ ansible all -i ansible/inventory/hosts -m ping
 5. ✅ Push code to Git to trigger pipeline
 6. 🎉 Watch automated deployment to Test → Prod!
 
----
 
-**Created**: December 2025  
-**Project**: AppleBite CI/CD Project  
+
+**Created**: December 2025 **Project**: AppleBite CI/CD Project
 **Documentation**: Complete automation for 3-VM WSL setup
