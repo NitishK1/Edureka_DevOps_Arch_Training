@@ -22,10 +22,10 @@ pipeline {
                         # Install Puppet Agent locally
                         if ! command -v puppet &> /dev/null; then
                             echo "Installing Puppet Agent..."
-                            wget https://apt.puppet.com/puppet7-release-focal.deb
-                            sudo dpkg -i puppet7-release-focal.deb
-                            sudo apt-get update
-                            sudo apt-get install -y puppet-agent
+                            wget -q https://apt.puppet.com/puppet7-release-focal.deb
+                            sudo DEBIAN_FRONTEND=noninteractive dpkg -i puppet7-release-focal.deb
+                            sudo DEBIAN_FRONTEND=noninteractive apt-get update -qq
+                            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq puppet-agent
                             echo "Puppet Agent installed successfully"
                         else
                             echo "Puppet Agent already installed"
@@ -46,14 +46,14 @@ pipeline {
                     echo "=========================================="
 
                     sh '''
-                        # Install Docker locally using Ansible
+                        # Install Docker locally
                         cd AWS_Projects/AppleBite_CICD_Project2/ansible
 
                         # Check if Docker is installed
                         if ! command -v docker &> /dev/null; then
                             echo "Installing Docker..."
-                            sudo apt-get update
-                            sudo apt-get install -y docker.io
+                            sudo DEBIAN_FRONTEND=noninteractive apt-get update -qq
+                            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker.io
                             sudo systemctl start docker
                             sudo systemctl enable docker
                             sudo usermod -aG docker jenkins
